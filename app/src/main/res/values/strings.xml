@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">KotlinDemo</string>
+    <string name="app_desc">这是一个kotlin练手的demo</string>
+    <string name="daily">每日精选</string>
+    <string name="found">发现</string>
+    <string name="popular">热门</string>
+    <string name="mine">我的</string>
+    <string name="popularity">人气榜</string>
+</resources>
