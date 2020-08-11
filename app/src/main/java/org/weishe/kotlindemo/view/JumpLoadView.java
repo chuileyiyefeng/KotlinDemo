@@ -198,18 +198,15 @@ public class JumpLoadView extends ViewGroup {
         isOnAnim = true;
         if (scrollAnim == null) {
             scrollAnim = ValueAnimator.ofInt(0, distance);
-            scrollAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    int value = (int) valueAnimator.getAnimatedValue();
-                    animScrollValue = value - animScrollValue;
-                    int offsetY = rv.computeVerticalScrollOffset();
-                    if (mReduction && isOnLoadMore && offsetY != 0) {
-                        rv.layout(rv.getLeft(), rv.getTop() + animScrollValue, rv.getRight(), rv.getBottom());
-                    }
-                    JumpLoadView.this.scrollBy(0, animScrollValue);
-                    animScrollValue = value;
+            scrollAnim.addUpdateListener(valueAnimator -> {
+                int value = (int) valueAnimator.getAnimatedValue();
+                animScrollValue = value - animScrollValue;
+                int offsetY = rv.computeVerticalScrollOffset();
+                if (mReduction && isOnLoadMore && offsetY != 0) {
+                    rv.layout(rv.getLeft(), rv.getTop() + animScrollValue, rv.getRight(), rv.getBottom());
                 }
+                JumpLoadView.this.scrollBy(0, animScrollValue);
+                animScrollValue = value;
             });
             scrollAnim.addListener(new AnimatorListenerAdapter() {
                 @Override
