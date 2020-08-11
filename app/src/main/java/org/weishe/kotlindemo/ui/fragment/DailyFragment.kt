@@ -1,7 +1,5 @@
 package org.weishe.kotlindemo.ui.fragment
 
-import android.opengl.Visibility
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
