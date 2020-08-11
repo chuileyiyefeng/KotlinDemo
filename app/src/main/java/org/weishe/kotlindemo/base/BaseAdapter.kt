@@ -28,6 +28,16 @@ abstract class BaseAdapter<T>(val context: Context) :
         notifyItemInserted(list.size)
     }
 
+    open fun clearAllItemNoRefresh() {
+        list.clear()
+        notifyDataSetChanged()
+    }
+
+    open fun addItemList(collections: Collection<T>) {
+        list.addAll(collections)
+        notifyDataSetChanged()
+    }
+
     open fun getItem(position: Int): T {
         return list.get(position)
     }

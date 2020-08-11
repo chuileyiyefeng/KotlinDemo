@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
 
     <org.weishe.kotlindemo.view.JumpLoadView
         android:id="@+id/jump_load"
@@ -19,7 +20,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
+            android:id="@+id/rv_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />
@@ -34,4 +35,15 @@
             android:textColor="@color/app_color_theme_5" />
     </org.weishe.kotlindemo.view.JumpLoadView>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_month"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/color_title_bg"
+        android:gravity="center"
+        android:textColor="@color/color_black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:text="- Aug.10,Brunch -" />
+</FrameLayout>

@@ -174,7 +174,6 @@ public class JumpLoadView extends ViewGroup {
     // 还原状态
     public void reductionScroll() {
         if (rv != null) {
-//            rv.post(() -> startAnim(-getScrollY(), true));
             startAnim(-getScrollY(), true);
         }
     }

@@ -10,7 +10,7 @@ import java.lang.ref.WeakReference
 
 open class BasePresent<V : IBaseView> : IBasePresent<V> {
     private var weakReference: WeakReference<V>? = null
-    private val apiService = RetrofitUtils.getApiUrl()
+    private val apiService = RetrofitUtils.apiUrl
     private var disposable: CompositeDisposable? = null
     override fun attachView(view: V) {
         weakReference = WeakReference(view)
@@ -20,7 +20,7 @@ open class BasePresent<V : IBaseView> : IBasePresent<V> {
         weakReference?.clear()
     }
 
-    fun getView(): V? {
+     protected fun getView(): V? {
         return weakReference?.get()
     }
 

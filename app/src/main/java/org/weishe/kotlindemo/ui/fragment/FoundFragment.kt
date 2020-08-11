@@ -8,6 +8,10 @@ class FoundFragment : BaseFragment() {
 
     }
 
+    override fun initData() {
+
+    }
+
     override fun bindLayout(): Int {
         return R.layout.fragment_found
     }

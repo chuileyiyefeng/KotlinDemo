@@ -8,6 +8,10 @@ class PopularFragment : BaseFragment() {
 
     }
 
+    override fun initData() {
+
+    }
+
     override fun bindLayout(): Int {
         return R.layout.fragment_popular
     }

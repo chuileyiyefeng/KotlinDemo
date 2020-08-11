@@ -3,14 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.weishe.kotlindemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup,UnusedAttribute">
+        <meta-data
+            android:name="com.google.android.actions"
+            android:resource="@xml/network_security_config" />
+
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
