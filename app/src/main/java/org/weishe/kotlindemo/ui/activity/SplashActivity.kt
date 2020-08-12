@@ -17,7 +17,7 @@ class SplashActivity : BaseActivity() {
         tv_desc.text = getString(R.string.app_desc)
         tv_version.text = "v${AppUtils.getVersionName(this)}"
         animation = AlphaAnimation(0.1f, 1f)
-        animation?.duration = 2000
+        animation?.duration = 1000
         animation?.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(animation: Animation?) {
             }

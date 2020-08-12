@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<T>(val context: Context) :
-    RecyclerView.Adapter<BaseViewHolder>(), View.OnClickListener {
+    RecyclerView.Adapter<BaseViewHolder>() {
 
     var list = ArrayList<T>()
 
@@ -44,15 +44,17 @@ abstract class BaseAdapter<T>(val context: Context) :
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         bindHolder(holder, position)
-        holder.itemView.setOnClickListener(this)
-        holder.itemView.tag = position
+        holder.itemView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                itemClick(position)
+                itemClickListener?.itemClick(position)
+            }
+        })
     }
 
-    override fun onClick(v: View?) {
-        val i: Int = v?.getTag() as Int
-        itemClickListener?.itemClick(i)
-    }
+    open fun itemClick(position: Int){
 
+    }
     var itemClickListener: ItemClickListener? = null
         set(value) {
             field = value

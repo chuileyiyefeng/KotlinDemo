@@ -3,13 +3,14 @@ package org.weishe.kotlindemo.ui.adapter
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import org.weishe.kotlindemo.R
 import org.weishe.kotlindemo.base.BaseAdapter
 import org.weishe.kotlindemo.base.BaseViewHolder
 import org.weishe.kotlindemo.bean.NavigationBean
 
-class NavigationAdapter(context: Context) : BaseAdapter<NavigationBean>(context) {
+class NavigationAdapter(context: Context) : BaseAdapter<NavigationBean>(context){
     var lastSelection = 0
     override fun bindLayout(): Int {
         return R.layout.adapter_navigation
@@ -28,9 +29,7 @@ class NavigationAdapter(context: Context) : BaseAdapter<NavigationBean>(context)
             textVIew.setTextColor(context.resources.getColor(R.color.color_light_black))
         }
     }
-
-    override fun onClick(v: View?) {
-        val position: Int = v?.getTag() as Int
+    override fun itemClick(position: Int){
         if (position != lastSelection) {
             getItem(position).isSelect = true
             getItem(lastSelection).isSelect = false
@@ -38,7 +37,6 @@ class NavigationAdapter(context: Context) : BaseAdapter<NavigationBean>(context)
             notifyItemChanged(lastSelection)
         }
         lastSelection = position
-        super.onClick(v)
     }
 
 }
