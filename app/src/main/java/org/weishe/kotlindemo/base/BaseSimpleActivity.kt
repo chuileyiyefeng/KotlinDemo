@@ -7,7 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import org.weishe.kotlindemo.R
 import org.weishe.kotlindemo.utils.StatusBarUtil
 
-abstract class BaseActivity : AppCompatActivity() {
+/**
+ * panyi crate on 2020.08.13 16:11
+ * desc
+ */
+abstract class BaseSimpleActivity: AppCompatActivity() {
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +25,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initData()
         doBusiness()
 
-
     }
-
-
 
 
     abstract fun bindLayout(): Int

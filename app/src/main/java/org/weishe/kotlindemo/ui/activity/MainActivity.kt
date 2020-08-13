@@ -4,22 +4,23 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.weishe.kotlindemo.R
-import org.weishe.kotlindemo.base.BaseActivity
 import org.weishe.kotlindemo.base.BaseAdapter
+import org.weishe.kotlindemo.base.BaseSimpleActivity
 import org.weishe.kotlindemo.bean.NavigationBean
-import org.weishe.kotlindemo.showMineToast
 import org.weishe.kotlindemo.ui.adapter.NavigationAdapter
 import org.weishe.kotlindemo.ui.fragment.DailyFragment
 import org.weishe.kotlindemo.ui.fragment.FoundFragment
 import org.weishe.kotlindemo.ui.fragment.MineFragment
 import org.weishe.kotlindemo.ui.fragment.PopularFragment
 
-class MainActivity : BaseActivity(), BaseAdapter.ItemClickListener {
+class MainActivity : BaseSimpleActivity(), BaseAdapter.ItemClickListener {
     lateinit var adapter: NavigationAdapter
     var dailyFragment: DailyFragment? = null
     var foundFragment: FoundFragment? = null
     var popularFragment: PopularFragment? = null
     var mineFragment: MineFragment? = null
+
+
     override fun bindLayout(): Int {
         return R.layout.activity_main
     }

@@ -215,6 +215,7 @@ public class HomeDataBean implements Serializable{
                 private Long duration;
                 private String playUrl;
 
+
                 public String getPlayUrl() {
                     return playUrl == null ? "" : playUrl;
                 }

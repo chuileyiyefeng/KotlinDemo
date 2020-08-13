@@ -7,10 +7,11 @@ import android.view.animation.Animation
 import kotlinx.android.synthetic.main.actviity_splash.*
 import org.weishe.kotlindemo.R
 import org.weishe.kotlindemo.base.BaseActivity
+import org.weishe.kotlindemo.base.BaseSimpleActivity
 import org.weishe.kotlindemo.utils.AppUtils
 
 @SuppressLint("SetTextI18n")
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseSimpleActivity() {
     var animation: AlphaAnimation? = null
 
     override fun initView() {

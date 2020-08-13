@@ -1,14 +1,13 @@
 package org.weishe.kotlindemo.base
 
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import org.weishe.kotlindemo.http.BaseObserver
 import org.weishe.kotlindemo.http.RetrofitUtils
 import java.lang.ref.WeakReference
 
-open class BasePresent<V : IBaseView> : IBasePresent<V> {
+open class BasePresent<V : IBaseView> : IBasePresent<V>, LifecycleObserver {
     private var weakReference: WeakReference<V>? = null
     private val apiService = RetrofitUtils.apiUrl
     private var disposable: CompositeDisposable? = null
@@ -20,8 +19,13 @@ open class BasePresent<V : IBaseView> : IBasePresent<V> {
         weakReference?.clear()
     }
 
-     protected fun getView(): V? {
+    protected fun getView(): V? {
         return weakReference?.get()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    fun onDestroy() {
+        detachView()
     }
 
 //    open fun addDisposable(observable: Observable<*>, observer: BaseObserver) {
