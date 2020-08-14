@@ -150,7 +150,7 @@ public class HomeDataBean implements Serializable{
             }
 
             public DataBean getData() {
-                return data;
+                return data==null?new DataBean():data;
             }
 
             public void setData(DataBean data) {
@@ -198,7 +198,7 @@ public class HomeDataBean implements Serializable{
                  */
 
                 private String dataType;
-                private int id;
+                private Long id;
                 private String title;
                 private String description;
                 private String image;
@@ -214,7 +214,12 @@ public class HomeDataBean implements Serializable{
                 private List<TagsBean> tags;
                 private Long duration;
                 private String playUrl;
+                private AuthorBean author;
+                /**
+                 * cover : {"feed":"http://img.kaiyanapp.com/158f65d8a558c9dd0b86104eda69bb49.png?imageMogr2/quality/60/format/jpg","detail":"http://img.kaiyanapp.com/158f65d8a558c9dd0b86104eda69bb49.png?imageMogr2/quality/60/format/jpg","blurred":"http://img.kaiyanapp.com/1bd1f4eba9847c7141ba249cbc76cc7c.png?imageMogr2/quality/60/format/jpg","sharing":null,"homepage":"http://img.kaiyanapp.com/158f65d8a558c9dd0b86104eda69bb49.png?imageView2/1/w/720/h/560/format/jpg/q/75|watermark/1/image/aHR0cDovL2ltZy5rYWl5YW5hcHAuY29tL2JsYWNrXzMwLnBuZw==/dissolve/100/gravity/Center/dx/0/dy/0|imageslim"}
+                 */
 
+                private CoverBean cover;
 
                 public String getPlayUrl() {
                     return playUrl == null ? "" : playUrl;
@@ -244,7 +249,7 @@ public class HomeDataBean implements Serializable{
                  * author : {"id":619,"icon":"http://img.kaiyanapp.com/56cb65d09db5649407c77c9c1b6d31b9.jpeg?imageMogr2/quality/60/format/jpg","name":"广告裁判","description":"我们只需要最好的广告。","link":"","latestReleaseTime":1596899702000,"videoNum":1798,"adTrack":null,"follow":{"itemType":"author","itemId":619,"followed":false},"shield":{"itemType":"author","itemId":619,"shielded":false},"approvedNotReadyVideoCount":0,"ifPgc":true,"recSort":0,"expert":false}
                  */
 
-                private AuthorBean author;
+
 
                 public String getText() {
                     return text == null ? "" : text;
@@ -254,11 +259,7 @@ public class HomeDataBean implements Serializable{
                     this.text = text;
                 }
 
-                /**
-                 * cover : {"feed":"http://img.kaiyanapp.com/158f65d8a558c9dd0b86104eda69bb49.png?imageMogr2/quality/60/format/jpg","detail":"http://img.kaiyanapp.com/158f65d8a558c9dd0b86104eda69bb49.png?imageMogr2/quality/60/format/jpg","blurred":"http://img.kaiyanapp.com/1bd1f4eba9847c7141ba249cbc76cc7c.png?imageMogr2/quality/60/format/jpg","sharing":null,"homepage":"http://img.kaiyanapp.com/158f65d8a558c9dd0b86104eda69bb49.png?imageView2/1/w/720/h/560/format/jpg/q/75|watermark/1/image/aHR0cDovL2ltZy5rYWl5YW5hcHAuY29tL2JsYWNrXzMwLnBuZw==/dissolve/100/gravity/Center/dx/0/dy/0|imageslim"}
-                 */
 
-                private CoverBean cover;
 
                 public String getDataType() {
                     return dataType;
@@ -268,11 +269,11 @@ public class HomeDataBean implements Serializable{
                     this.dataType = dataType;
                 }
 
-                public int getId() {
+                public Long getId() {
                     return id;
                 }
 
-                public void setId(int id) {
+                public void setId(Long id) {
                     this.id = id;
                 }
 

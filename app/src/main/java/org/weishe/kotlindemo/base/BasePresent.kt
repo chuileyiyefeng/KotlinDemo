@@ -23,7 +23,7 @@ open class BasePresent<V : IBaseView> : IBasePresent<V>, LifecycleObserver {
         return weakReference?.get()
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         detachView()
     }

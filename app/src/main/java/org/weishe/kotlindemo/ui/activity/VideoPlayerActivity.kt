@@ -1,20 +1,18 @@
 package org.weishe.kotlindemo.ui.activity
 
 import android.content.res.Configuration
-import android.transition.Transition
 import androidx.core.view.ViewCompat
-import com.shuyu.gsyvideoplayer.GSYVideoManager
-import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder
-import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
-import com.shuyu.gsyvideoplayer.utils.Debuger
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils
+import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_video_play.*
 import org.weishe.kotlindemo.R
 import org.weishe.kotlindemo.base.BaseActivity
 import org.weishe.kotlindemo.bean.HomeDataBean
+import org.weishe.kotlindemo.bean.VideoRecommendBean
 import org.weishe.kotlindemo.constant.StartKey
 import org.weishe.kotlindemo.mvp.contract.VideoPlayerContract
 import org.weishe.kotlindemo.mvp.present.VideoPlayerPresent
+import org.weishe.kotlindemo.ui.adapter.VideoDetailAdapter
+import org.weishe.kotlindemo.utils.ImageLoader
 import org.weishe.kotlindemo.utils.StatusBarUtil
 
 
@@ -25,6 +23,7 @@ import org.weishe.kotlindemo.utils.StatusBarUtil
 class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
     private var itemBean: HomeDataBean.IssueListBean.ItemListBean? = null
     private var present: VideoPlayerPresent? = null
+    private var adapter: VideoDetailAdapter? = null
 
     override fun bindLayout(): Int {
         return R.layout.activity_video_play
@@ -37,12 +36,14 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
     }
 
     override fun initData() {
-        present = VideoPlayerPresent(this)
+        present = VideoPlayerPresent()
         present?.attachView(this)
         itemBean =
             intent.getSerializableExtra(StartKey.videoBean) as HomeDataBean.IssueListBean.ItemListBean?
         itemBean?.let {
-            present?.setVideoInfo(this, view_player, it)
+            present?.setVideoPlayInfo(this, view_player, it)
+            setVideoInfo(it)
+            present?.getRecentRelatedVideo(it.data.id)
         }
         present?.let {
             lifecycle.addObserver(it)
@@ -58,7 +59,11 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
 
     // 设置视频信息
     private fun setVideoInfo(bean: HomeDataBean.IssueListBean.ItemListBean) {
-
+        adapter = VideoDetailAdapter(this)
+        rv_video_detail.layoutManager = LinearLayoutManager(this)
+        rv_video_detail.adapter = adapter
+        adapter?.setHeaderData(bean)
+        ImageLoader.loadUrl(this, iv_bg, bean.data.cover.blurred)
     }
 
     var isFullScreen = false
@@ -82,7 +87,10 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
     override fun doBusiness() {
     }
 
-    override fun setRecentRelatedVideo() {
+    override fun setRecentRelatedVideo(bean: VideoRecommendBean) {
+        bean.itemList.forEach {
+            adapter?.addItem(it)
+        }
 
     }
 }

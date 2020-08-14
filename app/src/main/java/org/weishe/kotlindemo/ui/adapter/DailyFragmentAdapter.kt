@@ -51,7 +51,7 @@ class DailyFragmentAdapter(context: Activity) :
                 val ivCover = holder.getView<ImageView>(R.id.iv_cover)
                 val ivAvatar = holder.getView<ImageView>(R.id.iv_avatar)
                 ImageLoader.loadUrl(context, ivCover, itemListBean.data.cover.feed)
-                ImageLoader.loadUrlCircleHolder(context, ivAvatar, itemListBean.data.author.icon)
+                ImageLoader.loadUrlCircle(context, ivAvatar, itemListBean.data.author.icon)
                 holder.setText(R.id.tv_title, itemListBean.data.title)
                 holder.setText(R.id.tv_category, "# " + itemListBean.data.category)
                 var tag = "#"

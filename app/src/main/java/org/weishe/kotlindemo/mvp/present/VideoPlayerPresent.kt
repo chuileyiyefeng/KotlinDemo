@@ -2,6 +2,8 @@ package org.weishe.kotlindemo.mvp.present
 
 import android.app.Activity
 import android.content.res.Configuration
+import android.util.Log
+import androidx.annotation.MainThread
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.OnLifecycleEvent
 import com.shuyu.gsyvideoplayer.GSYVideoManager
@@ -10,9 +12,12 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 import com.shuyu.gsyvideoplayer.utils.Debuger
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.weishe.kotlindemo.base.BasePresent
 import org.weishe.kotlindemo.base.IBaseView
 import org.weishe.kotlindemo.bean.HomeDataBean
+import org.weishe.kotlindemo.http.RetrofitUtils
 import org.weishe.kotlindemo.mvp.contract.VideoPlayerContract
 
 
@@ -20,17 +25,28 @@ import org.weishe.kotlindemo.mvp.contract.VideoPlayerContract
  * panyi crate on 2020.08.13 15:58
  * desc
  */
-class VideoPlayerPresent(view:IBaseView) : BasePresent<VideoPlayerContract.View>(), VideoPlayerContract.Present {
+class VideoPlayerPresent : BasePresent<VideoPlayerContract.View>(), VideoPlayerContract.Present {
     var orientationUtils: OrientationUtils? = null
     private var isPlay = false
     private var isPause = false
     private var view: StandardGSYVideoPlayer? = null
     private var context: Activity? = null
-    override fun getRecentRelatedVideo() {
-        getView()?.setRecentRelatedVideo()
+    override fun getRecentRelatedVideo(id: Long) {
+        RetrofitUtils.apiUrl?.let {
+            it.getRecommendVideo(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    run {
+                        getView()?.setRecentRelatedVideo(it)
+                    }
+                }, {
+
+                })
+
+        }
     }
 
-    override fun setVideoInfo(
+    override fun setVideoPlayInfo(
         context: Activity,
         view: StandardGSYVideoPlayer,
         bean: HomeDataBean.IssueListBean.ItemListBean
