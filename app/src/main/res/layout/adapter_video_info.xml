@@ -17,7 +17,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="8dp"
             android:singleLine="true"
             android:textColor="@color/backgroundColor"
             android:textSize="16sp"
@@ -28,8 +28,7 @@
             android:id="@+id/tv_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="4dp"
             android:singleLine="true"
             android:textColor="@color/color_lighter_gray"
             android:textSize="14sp"
@@ -42,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="14dp"
         android:layout_marginBottom="5dp"
         android:textColor="@color/color_lighter_gray"
@@ -61,6 +60,7 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:layout_gravity="center_vertical"
             android:id="@+id/iv_avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -79,6 +79,7 @@
                 android:id="@+id/tv_author_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:textColor="@color/color_white"
                 android:textSize="14sp"
                 tools:text="My name" />
@@ -88,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:layout_marginBottom="4dp"
                 android:textColor="@color/color_lighter_gray"
                 android:textSize="12sp"
                 tools:text="发现艺术背后的故事" />

@@ -18,7 +18,7 @@ public class VideoRecommendBean {
 
     private int count;
     private int total;
-    private Object nextPageUrl;
+    private String nextPageUrl;
     private boolean adExist;
     private List<ItemListBean> itemList;
 
@@ -49,11 +49,11 @@ public class VideoRecommendBean {
         this.total = total;
     }
 
-    public Object getNextPageUrl() {
+    public String getNextPageUrl() {
         return nextPageUrl;
     }
 
-    public void setNextPageUrl(Object nextPageUrl) {
+    public void setNextPageUrl(String nextPageUrl) {
         this.nextPageUrl = nextPageUrl;
     }
 

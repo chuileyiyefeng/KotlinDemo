@@ -60,7 +60,7 @@ public class RecommendDataBean {
      */
 
     private String dataType;
-    private int id;
+    private Long id;
     private String title;
     private String description;
     private String library;
@@ -125,11 +125,11 @@ public class RecommendDataBean {
         this.dataType = dataType;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

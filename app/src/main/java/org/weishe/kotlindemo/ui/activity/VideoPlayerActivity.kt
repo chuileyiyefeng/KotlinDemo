@@ -1,11 +1,14 @@
 package org.weishe.kotlindemo.ui.activity
 
+import android.content.Intent
 import android.content.res.Configuration
+import android.util.Log
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_video_play.*
 import org.weishe.kotlindemo.R
 import org.weishe.kotlindemo.base.BaseActivity
+import org.weishe.kotlindemo.base.BaseAdapter
 import org.weishe.kotlindemo.bean.HomeDataBean
 import org.weishe.kotlindemo.bean.VideoRecommendBean
 import org.weishe.kotlindemo.constant.StartKey
@@ -20,7 +23,8 @@ import org.weishe.kotlindemo.utils.StatusBarUtil
  * panyi crate on 2020.08.12 16:16
  * desc 视频播放页
  */
-class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
+class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View,
+    BaseAdapter.ItemClickListener {
     private var itemBean: HomeDataBean.IssueListBean.ItemListBean? = null
     private var present: VideoPlayerPresent? = null
     private var adapter: VideoDetailAdapter? = null
@@ -33,13 +37,17 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
         StatusBarUtil.setStatusBarColor(this, R.color.color_black)
         StatusBarUtil.setStatusTextDark(this, false)
         initTransition()
+        present = VideoPlayerPresent()
+        present?.attachView(this)
     }
 
     override fun initData() {
-        present = VideoPlayerPresent()
-        present?.attachView(this)
+        setMyIntent(intent)
+    }
+
+    private fun setMyIntent(intent: Intent?) {
         itemBean =
-            intent.getSerializableExtra(StartKey.videoBean) as HomeDataBean.IssueListBean.ItemListBean?
+            intent?.getSerializableExtra(StartKey.videoBean) as HomeDataBean.IssueListBean.ItemListBean?
         itemBean?.let {
             present?.setVideoPlayInfo(this, view_player, it)
             setVideoInfo(it)
@@ -48,6 +56,12 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
         present?.let {
             lifecycle.addObserver(it)
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        adapter?.clearAllItem()
+        setMyIntent(intent)
     }
 
     // 进场动画
@@ -63,6 +77,7 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
         rv_video_detail.layoutManager = LinearLayoutManager(this)
         rv_video_detail.adapter = adapter
         adapter?.setHeaderData(bean)
+        adapter?.itemClickListener = this
         ImageLoader.loadUrl(this, iv_bg, bean.data.cover.blurred)
     }
 
@@ -92,5 +107,15 @@ class VideoPlayerActivity : BaseActivity(), VideoPlayerContract.View {
             adapter?.addItem(it)
         }
 
+    }
+
+    override fun setErrorMsg(errorMsg: String) {
+        Log.e("myTest", errorMsg)
+    }
+
+    override fun itemClick(position: Int) {
+        adapter?.let {
+            present?.startNewVideo(this, view_player, it.getItem(position).data)
+        }
     }
 }

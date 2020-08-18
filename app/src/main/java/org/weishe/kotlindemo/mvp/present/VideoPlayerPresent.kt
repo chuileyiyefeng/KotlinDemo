@@ -1,6 +1,7 @@
 package org.weishe.kotlindemo.mvp.present
 
 import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
 import android.util.Log
 import androidx.annotation.MainThread
@@ -17,8 +18,13 @@ import io.reactivex.schedulers.Schedulers
 import org.weishe.kotlindemo.base.BasePresent
 import org.weishe.kotlindemo.base.IBaseView
 import org.weishe.kotlindemo.bean.HomeDataBean
+import org.weishe.kotlindemo.bean.RecommendDataBean
+import org.weishe.kotlindemo.constant.StartKey
+import org.weishe.kotlindemo.http.ExceptionHandle
 import org.weishe.kotlindemo.http.RetrofitUtils
+import org.weishe.kotlindemo.http.SchedulerUtils
 import org.weishe.kotlindemo.mvp.contract.VideoPlayerContract
+import org.weishe.kotlindemo.ui.activity.VideoPlayerActivity
 
 
 /**
@@ -33,16 +39,18 @@ class VideoPlayerPresent : BasePresent<VideoPlayerContract.View>(), VideoPlayerC
     private var context: Activity? = null
     override fun getRecentRelatedVideo(id: Long) {
         RetrofitUtils.apiUrl?.let {
-            it.getRecommendVideo(id).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            it.getRecommendVideo(id)
+                .compose(SchedulerUtils.ioToMain())
                 .subscribe({
                     run {
                         getView()?.setRecentRelatedVideo(it)
                     }
-                }, {
-
+                }, { throwable ->
+                    getView()?.setErrorMsg(ExceptionHandle.handleException(throwable))
                 })
 
+        }?.let {
+            addSubscription(it)
         }
     }
 
@@ -60,6 +68,7 @@ class VideoPlayerPresent : BasePresent<VideoPlayerContract.View>(), VideoPlayerC
                 it.isEnable = false
             }
             val gsyVideoOption = GSYVideoOptionBuilder()
+            Log.e("PlayUrl",it.data.playUrl)
             gsyVideoOption
                 .setIsTouchWiget(true)
                 .setRotateViewAuto(false)
@@ -79,8 +88,6 @@ class VideoPlayerPresent : BasePresent<VideoPlayerContract.View>(), VideoPlayerC
 
                     override fun onQuitFullscreen(url: String, vararg objects: Any) {
                         super.onQuitFullscreen(url, *objects)
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[0]) //title
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[1]) //当前非全屏player
                         orientationUtils?.backToProtVideo()
                     }
                 }).setLockClickListener { _, lock ->
@@ -111,12 +118,44 @@ class VideoPlayerPresent : BasePresent<VideoPlayerContract.View>(), VideoPlayerC
     }
 
     override fun backToProtVideo(): Boolean {
-        orientationUtils?.backToProtVideo()
-        // 返回是否是全屏
-        if (GSYVideoManager.backFromWindowFull(context)) {
-            return true
+        orientationUtils?.let {
+            it.backToProtVideo()
+            // 返回是否是全屏
+            if (GSYVideoManager.backFromWindowFull(context)) {
+                return true
+            }
         }
         return false
+    }
+
+    override fun startNewVideo(
+        context: Activity,
+        view: StandardGSYVideoPlayer,
+        currentBean: RecommendDataBean
+    ) {
+        val itemListBean = HomeDataBean.IssueListBean.ItemListBean()
+        val dataBean = HomeDataBean.IssueListBean.ItemListBean.DataBean()
+        val authorBean = HomeDataBean.IssueListBean.ItemListBean.DataBean.AuthorBean()
+        val coverBean = HomeDataBean.IssueListBean.ItemListBean.DataBean.CoverBean()
+        dataBean.id = currentBean.id
+        dataBean.playUrl = currentBean.playUrl
+        dataBean.title = currentBean.title
+        dataBean.description = currentBean.description
+        dataBean.category = currentBean.category
+        dataBean.duration = currentBean.duration
+
+        authorBean.icon = currentBean.author.icon
+        authorBean.name = currentBean.author.name
+        authorBean.descriptionX = currentBean.author.description
+        dataBean.author = authorBean
+
+        coverBean.blurred = currentBean.cover.blurred
+        dataBean.cover = coverBean
+
+        itemListBean.data = dataBean
+        val intent = Intent(context, VideoPlayerActivity::class.java)
+        intent.putExtra(StartKey.videoBean, itemListBean)
+        context.startActivity(intent)
     }
 
 

@@ -73,6 +73,7 @@ class DailyFragment : BaseFragment(), HomeContract.View, JumpLoadView.LoadListen
         present?.let {
             it.attachView(this)
             it.loadData()
+            lifecycle.addObserver(it)
         }
 
         context?.let {
@@ -101,7 +102,7 @@ class DailyFragment : BaseFragment(), HomeContract.View, JumpLoadView.LoadListen
     // 这个第一次的数据
     override fun setData(bean: HomeDataBean) {
         adapter?.let {
-            it.clearAllItemNoRefresh()
+            it.clearAllItem()
             it.addItemList(bean.issueList[0].itemList)
         }
         nextPageUrl = bean.nextPageUrl
@@ -116,6 +117,10 @@ class DailyFragment : BaseFragment(), HomeContract.View, JumpLoadView.LoadListen
     }
 
     override fun showError() {
+
+    }
+
+    override fun setErrorMsg(errorMsg: String) {
 
     }
 }

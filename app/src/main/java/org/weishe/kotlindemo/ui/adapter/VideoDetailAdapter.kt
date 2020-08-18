@@ -49,7 +49,7 @@ class VideoDetailAdapter(context: Activity) :
                 holder.setText(R.id.tv_desc, it.data.description)
                 holder.setText(
                     R.id.tv_tag,
-                    "#" + it.data.category + "/" + durationFormat(it.data.duration)
+                    "#${it.data.category}/${durationFormat(it.data.duration)}"
                 )
                 val ivHead: ImageView = holder.getView(R.id.iv_avatar)
                 ImageLoader.loadUrlCircle(context, ivHead, it.data.author.icon)
@@ -57,7 +57,7 @@ class VideoDetailAdapter(context: Activity) :
                 holder.setText(R.id.tv_author_desc, it.data.author.descriptionX)
             }
         } else {
-            val bean=getItem(position)
+            val bean = getItem(position)
             when (getItemViewType(position)) {
                 videoTitle -> {
                     holder.setText(R.id.tv_title, bean.data.text)
@@ -68,11 +68,16 @@ class VideoDetailAdapter(context: Activity) :
                     holder.setText(R.id.tv_title, bean.data.title)
                     holder.setText(
                         R.id.tv_tag,
-                        "#" + bean.data.category + "/" + durationFormat(bean.data.duration)
+                        "#${bean.data.category}/${durationFormat(bean.data.duration)}"
                     )
                 }
             }
         }
+    }
+
+    override fun clearAllItem() {
+        super.clearAllItem()
+        isAddHeader = false
     }
 
     var headBean: HomeDataBean.IssueListBean.ItemListBean? = null

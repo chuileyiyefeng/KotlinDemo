@@ -6,6 +6,7 @@ import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import org.weishe.kotlindemo.base.IBaseView
 import org.weishe.kotlindemo.bean.HomeDataBean
+import org.weishe.kotlindemo.bean.RecommendDataBean
 import org.weishe.kotlindemo.bean.VideoRecommendBean
 
 /**
@@ -18,13 +19,18 @@ interface VideoPlayerContract {
     }
 
     interface Present {
-        fun getRecentRelatedVideo(id:Long)
+        fun getRecentRelatedVideo(id: Long)
         fun setVideoPlayInfo(
             context: Activity,
             view: StandardGSYVideoPlayer,
             bean: HomeDataBean.IssueListBean.ItemListBean
         )
-        fun  onConfigurationChanged(newConfig: Configuration)
-        fun backToProtVideo():Boolean
+
+        fun onConfigurationChanged(newConfig: Configuration)
+        fun backToProtVideo(): Boolean
+        fun startNewVideo(
+            context: Activity,
+            view: StandardGSYVideoPlayer, currentBean: RecommendDataBean
+        )
     }
 }
