@@ -33,7 +33,7 @@ open class BasePresent<V : IBaseView> : IBasePresent<V>, LifecycleObserver {
         detachView()
     }
 
-    fun addSubscription(disposable: Disposable) {
+    protected fun addSubscription(disposable: Disposable) {
         compositeDisposable.add(disposable)
     }
 

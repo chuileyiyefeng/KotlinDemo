@@ -1,10 +1,12 @@
 package org.weishe.kotlindemo.bean;
 
+import java.io.Serializable;
+
 /**
  * panyi crate on 2020.08.18 16:12
  * desc 分类bean
  */
-public class CategoryBean {
+public class CategoryBean implements Serializable {
 
     /**
      * id : 14

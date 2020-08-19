@@ -9,10 +9,7 @@ import java.util.*
  * panyi crate on 2020.08.17 16:00
  * desc viewPager2的adapter
  */
-class ViewPagerAdapter2(
-    fragmentActivity: FragmentActivity,
-    var list: ArrayList<Fragment>
-) : FragmentStateAdapter(fragmentActivity) {
+class ViewPagerAdapter2(activity: FragmentActivity, var list: ArrayList<Fragment>) : FragmentStateAdapter(activity) {
     override fun createFragment(position: Int): Fragment {
         return list[position]
     }

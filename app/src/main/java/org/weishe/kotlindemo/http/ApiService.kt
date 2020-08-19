@@ -1,10 +1,7 @@
 package org.weishe.kotlindemo.http
 
 import io.reactivex.Observable
-import org.weishe.kotlindemo.bean.CategoryBean
-import org.weishe.kotlindemo.bean.FollowItemBean
-import org.weishe.kotlindemo.bean.HomeDataBean
-import org.weishe.kotlindemo.bean.VideoRecommendBean
+import org.weishe.kotlindemo.bean.*
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.http.Url
@@ -33,4 +30,17 @@ interface ApiService {
     /* 获取分类*/
     @GET("v4/categories")
     fun getCategory(): Observable<ArrayList<CategoryBean>>
+
+    /*获取全部排行标题*/
+    @GET("v4/rankList")
+    fun getRankList(): Observable<TabDataBean>
+
+    /*获取全部排行信息*/
+    @GET
+    fun getRankData(@Url url: String): Observable<RankDataBean>
+
+    /*获取分类的列表*/
+    @GET("v4/categories/videoList?")
+    fun getCategoryVideoList(@Query("id") id: Int): Observable<HomeDataBean.IssueListBean>
+
 }

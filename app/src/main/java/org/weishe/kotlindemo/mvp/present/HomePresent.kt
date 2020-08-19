@@ -22,10 +22,7 @@ class HomePresent : BasePresent<HomeContract.View>(), HomeContract.Present {
                 }, { throwable ->
                     getView()?.setErrorMsg(ExceptionHandle.handleException(throwable))
                 })
-        }?.let {
-            addSubscription(it)
-        }
-
+        }?.let { addSubscription(it) }
 
     }
 

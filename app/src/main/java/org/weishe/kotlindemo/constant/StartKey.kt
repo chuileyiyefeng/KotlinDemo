@@ -8,5 +8,7 @@ class StartKey {
     companion object {
         const val videoBean = "videoBean"
         const val video_transition = "video_transition"
+        const val rankUrl = "rankUrl"
+        const val categoryBean = "rankUrl"
     }
 }
